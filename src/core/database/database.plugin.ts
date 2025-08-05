@@ -37,6 +37,25 @@ async function databasePluginHelper(fastify: FastifyInstance) {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);
+  // Create a simple table for testing (highlights) if it doesn't exist
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS highlights (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      cover_image_url TEXT NOT NULL,
+      title TEXT
+    );
+  `);
+
+  // Create a table for testing tagged if it doesn't exist
+  db.exec(`
+  CREATE TABLE IF NOT EXISTS tagged (
+    id INTEGER PRIMARY KEY,
+    img_url TEXT NOT NULL,
+    caption TEXT,
+    tagged_by_user TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
 
   const transactions = createTransactionHelpers(db);
 

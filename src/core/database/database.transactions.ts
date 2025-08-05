@@ -11,6 +11,12 @@ export const createTransactionHelpers = (db: Database) => {
         getReelById: db.prepare("SELECT * FROM reels WHERE id = ?"),
         getAllReels: db.prepare("SELECT * FROM reels"),
         createReel: db.prepare("INSERT INTO reels (video_url, thumbnail_url, caption, views) VALUES (@video_url, @thumbnail_url, @caption, @views) RETURNING *"),
+        getHighlightById: db.prepare("SELECT * FROM highlights WHERE id = ?"),
+        getAllHighlights: db.prepare("SELECT * FROM highlights"),
+        createHighlight: db.prepare("INSERT INTO highlights (cover_image_url, title) VALUES (@cover_image_url, @title) RETURNING *"),
+        getTagById: db.prepare("SELECT * FROM tagged WHERE id = ?"),
+        getAllTags: db.prepare("SELECT * FROM tagged"),
+        createTag: db.prepare("INSERT INTO tagged (img_url, caption, tagged_by_user) VALUES (@img_url, @caption, @tagged_by_user) RETURNING *"),
     };
     const posts = {
         getById: (id: number) => {
@@ -33,10 +39,34 @@ export const createTransactionHelpers = (db: Database) => {
         create: (data: unknown[]) => {
             return statements.createReel.get(data);
         }
+    };
+    const highlights = {
+        getById: (id: number) => {
+            return statements.getHighlightById.get(id);
+        },
+        getAll: () => {
+            return statements.getAllHighlights.all();
+        },
+        create: (data: unknown[]) => {
+            return statements.createHighlight.get(data);
+        }
+    }
+    const tagged = {
+        getById: (id: number) => {
+            return statements.getTagById.get(id);
+        },
+        getAll: () => {
+            return statements.getAllTags.all();
+        },
+        create: (data: unknown[]) => {
+            return statements.createTag.get(data);
+        }
     }
     return {
         posts,
         reels,
+        highlights,
+        tagged,
     };
 };
 exports.createTransactionHelpers = createTransactionHelpers;
