@@ -2,19 +2,19 @@ import { z } from "zod";
 
 // First, we define the zod schemas
 const createTagDtoSchema = z.object({
-  image_url: z.string().url(),
+  post_id: z.number(), 
+  img_url: z.string().url(), 
   caption: z.string().optional(), 
-  tagged_by_user: z.string(), 
-  views: z.number().int().min(0),
+  tagged_by_user: z.string(),
   created_at: z.string(),
 });
 
 const tagSchema = z.object({
   id: z.number(),
-  image_url: z.string().url(),
+  post_id: z.number(), 
+  img_url: z.string().url(), 
   caption: z.string().optional(), 
-  tagged_by_user: z.string(), 
-  views: z.number().int().min(0),
+  tagged_by_user: z.string(),
   created_at: z.string(),
 });
 

@@ -14,9 +14,22 @@ export const createTransactionHelpers = (db: Database) => {
         getHighlightById: db.prepare("SELECT * FROM highlights WHERE id = ?"),
         getAllHighlights: db.prepare("SELECT * FROM highlights"),
         createHighlight: db.prepare("INSERT INTO highlights (cover_image_url, title) VALUES (@cover_image_url, @title) RETURNING *"),
-        getTagById: db.prepare("SELECT * FROM tagged WHERE id = ?"),
-        getAllTags: db.prepare("SELECT * FROM tagged"),
-        createTag: db.prepare("INSERT INTO tagged (img_url, caption, tagged_by_user) VALUES (@img_url, @caption, @tagged_by_user) RETURNING *"),
+        getTagById: db.prepare(`
+            SELECT tagged.id, tagged.post_id, tagged.tagged_by_user, tagged.created_at,
+                   posts.img_url, posts.caption
+            FROM tagged
+            JOIN posts ON tagged.post_id = posts.id
+            WHERE tagged.id = ?
+          `),
+          getAllTags: db.prepare(`
+            SELECT tagged.id, tagged.post_id, tagged.tagged_by_user, tagged.created_at,
+                   posts.img_url, posts.caption
+            FROM tagged
+            JOIN posts ON tagged.post_id = posts.id
+          `),
+          createTag: db.prepare(`
+            INSERT INTO tagged (post_id, tagged_by_user) VALUES (@post_id, @tagged_by_user) RETURNING *
+          `),
     };
     const posts = {
         getById: (id: number) => {

@@ -32,7 +32,7 @@ async function databasePluginHelper(fastify: FastifyInstance) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       video_url TEXT NOT NULL,
       thumbnail_url TEXT NOT NULL,
-      caption TEXT OPTIONAL,
+      caption TEXT,
       views INTEGER NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -50,10 +50,10 @@ async function databasePluginHelper(fastify: FastifyInstance) {
   db.exec(`
   CREATE TABLE IF NOT EXISTS tagged (
     id INTEGER PRIMARY KEY,
-    img_url TEXT NOT NULL,
-    caption TEXT,
+    post_id INTEGER NOT NULL,
     tagged_by_user TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(id)
     );
   `);
 
