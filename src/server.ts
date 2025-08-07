@@ -1,8 +1,7 @@
 import Fastify from "fastify";
-import multipart from "@fastify/multipart";
 import path from "path";
-import fs from "fs/promises";
-import { randomUUID } from "crypto";
+import multipart from "@fastify/multipart";
+import fastifyStatic from "@fastify/static";
 import { databasePlugin } from "./core/database/database.plugin";
 import { postsRoutes } from "./modules/posts/posts.routes";
 import { reelsRoutes } from "./modules/reels/reels.routes";
@@ -19,6 +18,14 @@ fastify.register(multipart, {
     fileSize: 10 * 1024 * 1024 // 10 MB
   }
 });
+
+// Serve the public/uploads directory under /uploads URL path
+fastify.register(fastifyStatic, {
+  root: path.join(process.cwd(), "public", "uploads"),
+  prefix: "/uploads/",
+  index: false,
+});
+
 // Register our database plugin
 fastify.register(databasePlugin);
 // Register our new posts routes
@@ -32,11 +39,12 @@ fastify.get("/", function (request, reply) {
   reply.send({ hello: "world" });
 });
 
-const port = 3000;
+const port = Number(process.env.PORT) || 3000;
 
 fastify.listen({ port }, function (err, address) {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
   }
+  fastify.log.info(`Server listening at ${address}`);
 });
