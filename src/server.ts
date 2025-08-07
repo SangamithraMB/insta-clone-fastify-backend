@@ -1,4 +1,8 @@
 import Fastify from "fastify";
+import multipart from "@fastify/multipart";
+import path from "path";
+import fs from "fs/promises";
+import { randomUUID } from "crypto";
 import { databasePlugin } from "./core/database/database.plugin";
 import { postsRoutes } from "./modules/posts/posts.routes";
 import { reelsRoutes } from "./modules/reels/reels.routes";
@@ -9,6 +13,12 @@ const fastify = Fastify({
   logger: true,
 });
 
+// Register multipart plugin
+fastify.register(multipart, {
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10 MB
+  }
+});
 // Register our database plugin
 fastify.register(databasePlugin);
 // Register our new posts routes

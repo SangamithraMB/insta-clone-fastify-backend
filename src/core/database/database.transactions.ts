@@ -6,7 +6,7 @@ export const createTransactionHelpers = (db: Database) => {
     // We use prepared statements for security and performance.
     const statements = {
         getPostById: db.prepare("SELECT * FROM posts WHERE id = ?"),
-        getAllPosts: db.prepare("SELECT * FROM posts"),
+        getAllPosts: db.prepare("SELECT * FROM posts ORDER BY created_at DESC"),
         createPost: db.prepare("INSERT INTO posts (img_url, caption) VALUES (@img_url, @caption) RETURNING *"),
         getReelById: db.prepare("SELECT * FROM reels WHERE id = ?"),
         getAllReels: db.prepare("SELECT * FROM reels"),
