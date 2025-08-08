@@ -17,6 +17,21 @@ describe("POST /posts", () => {
         getById: jest.fn(),
         getAll: jest.fn(),
         create: jest.fn().mockReturnValue(createdPost),
+      }, 
+      reels: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
+      tagged: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
+      highlights: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
       },
     });
 
@@ -48,12 +63,28 @@ describe("POST /posts", () => {
       },
     ];
     app.decorate("transactions", {
-posts: {
-  getById: jest.fn(),
-  getAll: jest.fn().mockReturnValue(mockPosts),
-  create: jest.fn(),
-},
+    posts: {
+      getById: jest.fn(),
+      getAll: jest.fn().mockReturnValue(mockPosts),
+      create: jest.fn(),
+          },
+    reels: {
+      create: jest.fn(),
+      getAll: jest.fn(),
+      getById: jest.fn(),
+          },
+    highlights: {
+      create: jest.fn(),
+      getAll: jest.fn(),
+      getById: jest.fn(),
+    },
+    tagged: {
+      create: jest.fn(),
+      getAll: jest.fn(),
+      getById: jest.fn(),
+    },
     });
+    
     app.register(postsRoutes);
     // when
     const response = await app.inject({

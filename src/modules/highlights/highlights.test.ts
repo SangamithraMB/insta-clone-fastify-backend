@@ -19,8 +19,25 @@ describe("GET /highlights", () => {
     ];
 
     app.decorate("transactions", {
+      posts: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
+      reels:{
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
+      tagged:{
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
       highlights: {
+        create: jest.fn(),
         getAll: jest.fn().mockReturnValue(mockHighlights),
+        getById: jest.fn(),
       },
     });
 
@@ -44,7 +61,24 @@ describe("GET /highlights", () => {
     };
 
     app.decorate("transactions", {
+      posts: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
+      reels: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
+      tagged: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
       highlights: {
+        create: jest.fn(),
+        getAll: jest.fn(),
         getById: jest.fn().mockReturnValue(mockHighlight),
       },
     });

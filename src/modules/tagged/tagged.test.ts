@@ -23,8 +23,25 @@ describe("GET /tagged/grid", () => {
     // To satisfy TypeScript, our mock must match the full shape of the
     // 'transactions' dependency, including all methods on 'posts'.
     app.decorate("transactions", {
+      posts: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
+      reels: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
+      },
       tagged: {
+        create: jest.fn(),
         getAll: jest.fn().mockReturnValue(mockTags),
+        getById: jest.fn(),
+      },
+      highlights: {
+        create: jest.fn(),
+        getAll: jest.fn(),
+        getById: jest.fn(),
       },
     });
 

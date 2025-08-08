@@ -38,7 +38,7 @@ export const createTransactionHelpers = (db: Database) => {
         getAll: () => {
             return statements.getAllPosts.all();
         },
-        create: (data: unknown[]) => {
+        create: (data:  { img_url: string; caption: string }) => {
             return statements.createPost.get(data);
         },
     };
@@ -49,7 +49,7 @@ export const createTransactionHelpers = (db: Database) => {
         getAll: () => {
             return statements.getAllReels.all();
         },
-        create: (data: unknown[]) => {
+        create: (data: { video_url: string; thumbnail_url: string; caption?: string; views: number }) => {
             return statements.createReel.get(data);
         }
     };
@@ -60,7 +60,7 @@ export const createTransactionHelpers = (db: Database) => {
         getAll: () => {
             return statements.getAllHighlights.all();
         },
-        create: (data: unknown[]) => {
+        create: (data: { cover_image_url: string; title: string }) => {
             return statements.createHighlight.get(data);
         }
     }
@@ -71,7 +71,7 @@ export const createTransactionHelpers = (db: Database) => {
         getAll: () => {
             return statements.getAllTags.all();
         },
-        create: (data: unknown[]) => {
+        create: (data: { post_id: number; tagged_by_user: string} ) => {
             return statements.createTag.get(data);
         }
     }
