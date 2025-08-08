@@ -82,4 +82,5 @@ export const createTransactionHelpers = (db: Database) => {
         tagged,
     };
 };
+export type TransactionHelpers = ReturnType<typeof createTransactionHelpers>;
 exports.createTransactionHelpers = createTransactionHelpers;
